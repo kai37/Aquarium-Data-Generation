@@ -1,11 +1,15 @@
 import random
+import pandas as pd
 
-def generate_random_parameters():
+def generate_random_parameters(num_samples=100000):
     """
-    Generates a set of 9 random values based on the given parameter ranges.
+    Generates a dataset of random values based on the given parameter ranges.
+    
+    Parameters:
+    num_samples (int): Number of samples to generate.
     
     Returns:
-    dict: A dictionary containing parameter names and their corresponding random values.
+    pd.DataFrame: A DataFrame containing parameter names and their corresponding random values.
     """
     ranges = {
         "Ammonia": (0.00, 5.00),
@@ -19,15 +23,16 @@ def generate_random_parameters():
         "Salinity": (1.000, 1.050)
     }
     
-    generated_values = {}
-    for param, (low, high) in ranges.items():
-        generated_values[param] = round(random.uniform(low, high), 3)
+    data = []
+    for _ in range(num_samples):
+        sample = {param: round(random.uniform(low, high), 3) for param, (low, high) in ranges.items()}
+        data.append(sample)
     
-    return generated_values
+    return pd.DataFrame(data)
 
 # Example usage:
 if __name__ == "__main__":
-    random_parameters = generate_random_parameters()
-    print("Generated parameters:")
-    for param, value in random_parameters.items():
-        print(f"{param}: {value}")
+    num_samples = int(input("Enter number of samples to generate: "))
+    dataset = generate_random_parameters(num_samples)
+    dataset.to_csv("aquarium_dataset.csv", index=False)
+    print(f"Generated dataset with {num_samples} samples saved as 'aquarium_dataset.csv'")
