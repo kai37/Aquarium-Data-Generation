@@ -33,6 +33,7 @@ def generate_random_parameters(num_samples=100000):
 # Example usage:
 if __name__ == "__main__":
     num_samples = int(input("Enter number of samples to generate: "))
+    save_path = input("Enter file path to save dataset (including filename): ")
     dataset = generate_random_parameters(num_samples)
-    dataset.to_csv("aquarium_dataset.csv", index=False)
-    print(f"Generated dataset with {num_samples} samples saved as 'aquarium_dataset.csv'")
+    dataset.to_csv(save_path, index=False)
+    print(f"Generated dataset with {num_samples} samples saved as '{save_path}'")
